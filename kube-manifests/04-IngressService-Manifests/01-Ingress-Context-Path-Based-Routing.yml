@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+spec:
+  ingressClassName: nginx  #NGINX Ingress Controller other options are ...  azure/application-gateway or haproxy
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend: # backend service where traffic should be forwarded.
+          service:
+            name: usermgmt-webapp-clusterip-service
+            port:
+              number: 80 #service port number
+      - path: /app1
+        pathType: Prefix
+        backend: # backend service where traffic should be forwarded.
+          service:
+            name: app1-nginx-clusterip-service
+            port:
+              number: 80 #service port number
+      - path: /app2
+        pathType: Prefix
+        backend: # backend service where traffic should be forwarded.
+          service:
+            name: app2-nginx-clusterip-service
+            port:
+              number: 80 #service port number
